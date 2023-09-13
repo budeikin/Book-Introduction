@@ -19,5 +19,16 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
 
+  smtp4dev:
+    container_name: email_sender
+    image: rnwood/smtp4dev:v3
+    restart: always
+    ports:
+      - '5000:80'
+      - '25:25'
+    volumes:
+      - smtp4dev-data:/smtp4dev
+
 volumes:
   db:
+  smtp4dev-data:

@@ -1,3 +1,5 @@
 django==3.2
 psycopg2-binary==2.9.3
 pillow==10.0.0
+django-mail-templated==2.6.5
+six==1.16.0
