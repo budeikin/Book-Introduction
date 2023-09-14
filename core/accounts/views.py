@@ -4,11 +4,12 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from .models import User
 from .tokens import account_activation_token
-from .forms import SignUpForm
+from .forms import SignUpForm, LoginForm
 from django.views import View
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
+from django.contrib.auth import logout, login
 
 
 # Create your views here.
@@ -53,3 +54,35 @@ class ActivateAccount(View):
         else:
 
             return redirect('home:home_page')
+
+
+class LoginView(View):
+    def get(self, request, *args, **kwargs):
+        login_form = LoginForm()
+        return render(request, 'accounts/login.html', context={'form': login_form})
+
+    def post(self, request, *args, **kwargs):
+        login_form = LoginForm(request.POST)
+        if login_form.is_valid():
+            user_username = login_form.cleaned_data['username']
+            user_password = login_form.cleaned_data['password']
+            user = User.objects.get(username__iexact=user_username)
+            if user:
+                if user.is_active == 'True':
+                    is_correct_password = user.check_password(user_password)
+                    if is_correct_password:
+                        login(request, user)
+                        return redirect('home:home_page')
+                    else:
+                        login_form.add_error('password', 'this password is wrong')
+                else:
+                    login_form.add_error('username', 'this user is not active')
+            else:
+                login_form.add_error('username', 'this user does not exist')
+        return redirect('home:home_page')
+
+
+class LogoutView(View):
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return redirect('accounts:login')
