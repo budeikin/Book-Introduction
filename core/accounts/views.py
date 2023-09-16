@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
+from django.views.generic import TemplateView
 from mail_templated import send_mail
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from .models import User
 from .tokens import account_activation_token
-from .forms import SignUpForm, LoginForm
+from .forms import SignUpForm, LoginForm, PasswordResetForm
 from django.views import View
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_text
@@ -56,6 +57,7 @@ class ActivateAccount(View):
             return redirect('home:home_page')
 
 
+# login view
 class LoginView(View):
     def get(self, request, *args, **kwargs):
         login_form = LoginForm()
@@ -82,7 +84,40 @@ class LoginView(View):
         return redirect('home:home_page')
 
 
+# logout view
 class LogoutView(View):
     def get(self, request, *args, **kwargs):
         logout(request)
         return redirect('accounts:login')
+
+
+# password reset view
+class PasswordResetView(View):
+    def get(self, request, *args, **kwargs):
+        password_reset_form = PasswordResetForm()
+        return render(request, 'accounts/password_reset.html', context={'form': password_reset_form})
+
+    def post(self, request, *args, **kwargs):
+        password_reset_form = PasswordResetForm(request.POST)
+        if password_reset_form.is_valid():
+            user_email = password_reset_form.cleaned_data['email']
+            current_site = get_current_site(request)
+            send_mail('accounts/email/reset_password_confirm.tpl', context={
+                'user': request.user,
+                'domain': current_site,
+                'uid': urlsafe_base64_encode(force_bytes(request.user.pk)),
+                'token': account_activation_token.make_token(request.user)
+            }, from_email='test@gmail.com', recipient_list=[user_email])
+            return redirect('accounts:password_reset_done')
+
+        return render(request, 'accounts/password_reset.html', context={'form': password_reset_form})
+
+
+# password reset done view
+class PasswordResetDoneView(TemplateView):
+    template_name = 'accounts/password_reset_done.html'
+
+# password reset confirm view
+
+
+# password reset complete view
