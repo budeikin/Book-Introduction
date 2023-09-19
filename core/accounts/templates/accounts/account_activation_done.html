@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    done
+{% endblock %}
+
+{% block content %}
+    <h3>your account is active now</h3>
+    <h4>you can <a href="{% url 'accounts:login' %}">login</a> with your account</h4>
+{% endblock %}

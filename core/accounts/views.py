@@ -1,16 +1,20 @@
+from django.contrib.auth.views import PasswordResetConfirmView, \
+    PasswordResetView
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from mail_templated import send_mail
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
+from .forms import SignUpForm, LoginForm
 from .models import User
 from .tokens import account_activation_token
-from .forms import SignUpForm, LoginForm, PasswordResetForm
 from django.views import View
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth import logout, login
+from django.utils.http import urlsafe_base64_decode
 
 
 # Create your views here.
@@ -68,19 +72,20 @@ class LoginView(View):
         if login_form.is_valid():
             user_username = login_form.cleaned_data['username']
             user_password = login_form.cleaned_data['password']
-            user = User.objects.get(username__iexact=user_username)
+            user = User.objects.filter(username__iexact=user_username).first()
             if user:
-                if user.is_active == 'True':
+                if user.is_active:
                     is_correct_password = user.check_password(user_password)
                     if is_correct_password:
                         login(request, user)
                         return redirect('home:home_page')
                     else:
-                        login_form.add_error('password', 'this password is wrong')
+                        login_form.add_error('username', 'this user does not exist')
                 else:
-                    login_form.add_error('username', 'this user is not active')
+                    login_form.add_error('username', 'this user does not exist')
             else:
                 login_form.add_error('username', 'this user does not exist')
+            return render(request, 'accounts/login.html', context={'form': login_form})
         return redirect('home:home_page')
 
 
@@ -92,32 +97,24 @@ class LogoutView(View):
 
 
 # password reset view
-class PasswordResetView(View):
-    def get(self, request, *args, **kwargs):
-        password_reset_form = PasswordResetForm()
-        return render(request, 'accounts/password_reset.html', context={'form': password_reset_form})
-
-    def post(self, request, *args, **kwargs):
-        password_reset_form = PasswordResetForm(request.POST)
-        if password_reset_form.is_valid():
-            user_email = password_reset_form.cleaned_data['email']
-            current_site = get_current_site(request)
-            send_mail('accounts/email/reset_password_confirm.tpl', context={
-                'user': request.user,
-                'domain': current_site,
-                'uid': urlsafe_base64_encode(force_bytes(request.user.pk)),
-                'token': account_activation_token.make_token(request.user)
-            }, from_email='test@gmail.com', recipient_list=[user_email])
-            return redirect('accounts:password_reset_done')
-
-        return render(request, 'accounts/password_reset.html', context={'form': password_reset_form})
+class CPasswordResetView(PasswordResetView):
+    from_email = 'test@gmail.com'
+    template_name = 'accounts/password_reset.html'
+    success_url = reverse_lazy('accounts:password_reset_done')
+    email_template_name = 'accounts/email/reset_password_confirm.tpl'
 
 
 # password reset done view
 class PasswordResetDoneView(TemplateView):
     template_name = 'accounts/password_reset_done.html'
 
+
 # password reset confirm view
+class CPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'accounts/password_reset_confirm.html'
+    success_url = reverse_lazy('accounts:password_reset_complete')
 
 
 # password reset complete view
+class PasswordResetCompleteView(TemplateView):
+    template_name = 'accounts/password_reset_complete.html'

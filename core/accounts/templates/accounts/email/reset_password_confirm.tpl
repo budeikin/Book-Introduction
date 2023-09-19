@@ -1,7 +1,7 @@
 {% extends "mail_templated/base.tpl" %}
 
 {% block subject %}
-Hello
+Hello {{ user.username}}
 {% endblock %}
 
 {% block body %}
