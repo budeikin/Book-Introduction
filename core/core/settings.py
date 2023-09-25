@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     #  internal modules
     'home.apps.HomeConfig',
     'accounts.apps.AccountsConfig',
+    'user_panel.apps.UserPanelConfig',
     #  external moduels
     'mail_templated',
+    'django_render_partial'
 ]
 
 MIDDLEWARE = [

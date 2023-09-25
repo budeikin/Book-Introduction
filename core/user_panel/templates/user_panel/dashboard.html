@@ -1,15 +1,31 @@
 {% extends 'base.html' %}
-
+{% load render_partial %}
 {% block title %}
-    dashboard
+    Profile
 {% endblock %}
 
-
 {% block content %}
-    <div class="container">
-        <h3>{{ user.username }}</h3>
-        <h3>{{ user.first_name }}</h3>
-        <h3>{{ user.last_name }}</h3>
-        <h3>{{ user.email }}</h3>
+
+    <div class="container d-flex">
+
+        <div class="col-sm">
+            <div class="card" style="width:400px">
+                {% if user.avatar %}
+                    <img src="{{ profile.user.avatar.url }}" alt="avatar">
+                {% else %}
+                    <img class="card-img-top"
+                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png"
+                         alt="Card image">
+                {% endif %}
+                <div class="card-body">
+                    <h4 class="card-title">{{ profile.user.username }}</h4>
+                    <p class="card-text">{{ profile.user.email }}</p>
+                    <p class="card-text">{{ profile.user.first_name }}</p>
+                    <p class="card-text">{{ profile.user.last_name }}</p>
+                </div>
+            </div>
+        </div>
+        {% render_partial 'user_panel.views.profile_menu_component' %}
     </div>
+
 {% endblock %}

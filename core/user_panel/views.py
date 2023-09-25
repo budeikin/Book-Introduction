@@ -1,3 +1,4 @@
+from accounts.models import UserProfile
 from django.contrib.auth.views import PasswordChangeView
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -12,6 +13,11 @@ from .forms import PasswordChangeForm
 class DashboardView(TemplateView):
     template_name = 'user_panel/dashboard.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['profile'] = UserProfile.objects.get(id=self.request.user.id)
+        return context
+
 
 # change password view
 class ChangePasswordView(PasswordChangeView):
@@ -24,4 +30,8 @@ class ChangePasswordView(PasswordChangeView):
 class ChangePasswordDoneView(TemplateView):
     template_name = 'user_panel/change_password_done.html'
 
+
+# dashboard menu component
+def profile_menu_component(request):
+    return render(request, 'user_panel/components/user_panel_menu.html')
 # change information view
