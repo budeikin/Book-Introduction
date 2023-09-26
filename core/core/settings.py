@@ -144,3 +144,6 @@ EMAIL_HOST_PASSWORD = ""
 
 # auth user model
 AUTH_USER_MODEL = 'accounts.User'
+
+# login url
+LOGIN_URL = 'accounts.views.LoginView'

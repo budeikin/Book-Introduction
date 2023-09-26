@@ -1,18 +1,22 @@
 {% extends 'base.html' %}
 {% load render_partial %}
+
 {% block title %}
-    change password
+    edit profile
 {% endblock %}
 
 {% block content %}
     <div class="container d-flex">
 
-        <div class="col-sm">
+        <div class="col-sm-9">
+            <h3>Edit Profile {{ user.username }}</h3>
+            <hr>
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" class="btn btn-primary">save</button>
+                <button type="submit" class="btn btn-primary">save changes</button>
             </form>
+            <p>joined date : {{ user.date_joined|date }}</p>
 
         </div>
         {% render_partial 'user_panel.views.profile_menu_component' %}

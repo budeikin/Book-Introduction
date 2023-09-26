@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import SetPasswordForm
 from django.core.exceptions import ValidationError
-from django.contrib.auth.views import PasswordChangeView
+
+from accounts.models import User
+
 
 class PasswordChangeForm(SetPasswordForm):
     """
@@ -31,3 +33,9 @@ class PasswordChangeForm(SetPasswordForm):
                 code='password_incorrect',
             )
         return old_password
+
+
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name']

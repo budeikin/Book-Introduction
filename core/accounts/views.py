@@ -1,5 +1,6 @@
 from django.contrib.auth.views import PasswordResetConfirmView, \
     PasswordResetView
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
@@ -72,7 +73,7 @@ class LoginView(View):
         if login_form.is_valid():
             user_username = login_form.cleaned_data['username']
             user_password = login_form.cleaned_data['password']
-            user = User.objects.filter(username__iexact=user_username).first()
+            user = User.objects.filter(Q(username__iexact=user_username) | Q(email__iexact=user_username)).first()
             if user:
                 if user.is_active:
                     is_correct_password = user.check_password(user_password)
