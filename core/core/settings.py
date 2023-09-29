@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'accounts.apps.AccountsConfig',
     'user_panel.apps.UserPanelConfig',
+    'book_app.apps.BookAppConfig',
+
     #  external moduels
     'mail_templated',
     'django_render_partial'
