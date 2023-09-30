@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'accounts.apps.AccountsConfig',
     'user_panel.apps.UserPanelConfig',
-    'book_app.apps.BookAppConfig',
+    'book.apps.BookConfig',
 
     #  external moduels
     'mail_templated',
