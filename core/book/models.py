@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 from django.urls import reverse
 
 
@@ -7,8 +8,21 @@ from django.urls import reverse
 class Writer(models.Model):
     name = models.CharField(max_length=255)
     about = models.TextField()
+    slug = models.SlugField(null=True)
+    image = models.ImageField(upload_to='writers/', null=True, blank=True)
     date_of_birth = models.DateTimeField(null=True, blank=True)
     date_of_death = models.DateTimeField(null=True, blank=True)
+
+    @property
+    def birthdate(self):
+        return self.date_of_birth.strftime('%Y')
+
+    @property
+    def deathdate(self):
+        return self.date_of_birth.strftime('%Y')
+
+    def get_absolute_url(self):
+        return reverse('book:writer_detail', args=[self.slug])
 
     def __str__(self):
         return self.name

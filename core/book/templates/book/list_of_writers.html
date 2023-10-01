@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    list of writers
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h3>list of writers</h3>
+        <hr>
+        <div class="d-flex">
+            {% for writer in writers %}
+                <div class="p-4">
+                    <h5>{{ writer.name }}</h5>
+                    <img src="{{ writer.image.url }}" alt="book" style="width: 120px"><br>
+                    <a href="{{ writer.get_absolute_url }}">detail</a>
+                </div>
+            {% endfor %}
+        </div>
+
+    </div>
+{% endblock %}
