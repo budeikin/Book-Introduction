@@ -19,6 +19,17 @@
                     history. His works include The Stranger, The Plague, The Myth of Sisyphus, The Fall, and The
                     Rebel.</p>
                 <a href="">more </a>
+                <hr>
+                <div class="d-flex">
+                    {% for book in books %}
+                        <div class="p-4">
+                            <h5>{{ book.name }}</h5>
+                            <img src="{{ book.cover.url }}" alt="book" style="width: 120px"><br>
+                            <a href="{{ book.get_absolute_url }}">detail</a>
+                        </div>
+                    {% endfor %}
+                </div>
+
             </div>
         </div>
 

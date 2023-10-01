@@ -7,11 +7,15 @@
 {% block content %}
     <div class="container">
         <h3>list of books</h3>
-        {% for book in books %}
-            <h4>{{ book.name }}</h4>
-            <img src="{{ book.cover.url }}" alt="cover" class="rounded w-25">
-            <a href="{{ book.get_absolute_url }}">show</a>
-        {% endfor %}
+        <div class="d-flex">
+            {% for book in books %}
+                <div class="p-4">
+                    <h5>{{ book.name }}</h5>
+                    <img src="{{ book.cover.url }}" alt="book" style="width: 120px"><br>
+                    <a href="{% url 'book:book_detail' book.id %}">detail</a>
+                </div>
+            {% endfor %}
+        </div>
 
     </div>
 {% endblock %}

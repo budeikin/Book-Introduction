@@ -5,8 +5,24 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h3>{{ book.name }}</h3>
-        <h5>{{ book.description }}</h5>
+    <div class="container p-3">
+        <div class="d-flex flex-wrap">
+            <div class="col-md-6">
+                <img src="{{ book.cover.url }}" class="w-100 rounded" alt="">
+            </div>
+
+            <div class="col-md-6">
+                <h2>{{ book.name }}</h2>
+                <p>by {{ book.writer }}</p>
+                {% for genre in book.genre.all %}
+                    <h5 style="border: darkgray solid 3px ;width: fit-content;padding: 5px;border-radius: 10px">{{ genre.name }}</h5>
+                {% endfor %}
+
+
+                <h5 class="p-2">{{ book.description }}</h5>
+                <p>published date : {{ book.yearpublished }}</p>
+                <p> pages : {{ book.leaves }}</p>
+            </div>
+        </div>
     </div>
 {% endblock %}
