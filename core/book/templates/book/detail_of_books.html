@@ -13,7 +13,7 @@
 
             <div class="col-md-6">
                 <h2>{{ book.name }}</h2>
-                <p>by {{ book.writer }}</p>
+                <p>by <a href="{{ book.writer.get_absolute_url }}">{{ book.writer }}</a></p>
                 {% for genre in book.genre.all %}
                     <h5 style="border: darkgray solid 3px ;width: fit-content;padding: 5px;border-radius: 10px">{{ genre.name }}</h5>
                 {% endfor %}
