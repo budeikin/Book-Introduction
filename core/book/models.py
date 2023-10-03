@@ -19,7 +19,7 @@ class Writer(models.Model):
 
     @property
     def deathdate(self):
-        return self.date_of_birth.strftime('%Y')
+        return self.date_of_death.strftime('%Y')
 
     def get_absolute_url(self):
         return reverse('book:writer_detail', args=[self.slug])

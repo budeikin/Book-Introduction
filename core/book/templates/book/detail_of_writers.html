@@ -5,7 +5,36 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h3>{{ writer.name }}</h3>
+    <div class="container p-3 flex-wrap justify-content-center d-flex">
+        <div class="col-md-6">
+            <div class="d-flex flex-column justify-content-center mt-5">
+                <img class="w-75" src="{{ writer.image.url }}">
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="d-flex flex-column justify-content-center mt-5">
+                <h3>{{ writer.name }}</h3>
+                <h5>( {{ writer.birthdate }} - {{ writer.deathdate }} )</h5>
+
+
+                <h5>{{ writer.about }}</h5>
+            </div>
+        </div>
+        <div class="d-flex flex-column justify-content-center align-items-center flex-wrap">
+            <hr>
+            <h3 class="bg-dark text-white rounded p-3">{{ writer|upper }}'S BOOKS</h3>
+            <div class="d-flex">
+                {% for book in writer.books.all %}
+                    <div class="p-4">
+                        <h5>{{ book.name }}</h5>
+                        <img src="{{ book.cover.url }}" alt="book" style="width: 120px"><br>
+                        <a href="{% url 'book:book_detail' book.id %}">detail</a>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
     </div>
 {% endblock %}
