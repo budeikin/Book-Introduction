@@ -24,6 +24,7 @@ urlpatterns = [
     path('auth/', include('accounts.urls')),
     path('account/', include('user_panel.urls')),
     path('book/', include('book.urls')),
+    path('ratings/', include('star_ratings.urls', namespace='ratings')),
 ]
 
 if settings.DEBUG:
