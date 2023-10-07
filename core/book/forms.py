@@ -1,8 +1,14 @@
 from django import forms
-from .models import Rating
+from django.forms import Textarea
+
+from .models import Comment
 
 
-class BookRatingForm(forms.ModelForm):
+class CommentForm(forms.ModelForm):
     class Meta:
-        model = Rating
-        fields = ['user', 'book', 'rating']
+        model = Comment
+        fields = ['body', ]
+
+        widgets = {
+            'body': Textarea(attrs={'cols': 60, 'rows': 5}),
+        }

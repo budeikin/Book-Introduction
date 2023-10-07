@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.urls import reverse
+from accounts.models import User
 
 
 # Create your models here.
@@ -53,3 +54,22 @@ class Book(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='comments')
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    comment_like = models.ManyToManyField(User, blank=True, related_name='com_like')
+    total_like = models.PositiveIntegerField(default=0)
+
+    @property
+    def total_like(self):
+        return self.comment_like.count()
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.user.username

@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block references %}
+    <link rel="stylesheet" href="{% static 'book/css/detail_of_books.css' %}">
     <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
 
     <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
@@ -32,7 +33,47 @@
                 <h5 class="p-2">{{ book.description }}</h5>
                 <p>published date : {{ book.yearpublished }}</p>
                 <p> pages : {{ book.leaves }}</p>
+                <hr>
+
+                <div class="d-block">
+                    {% if user.is_authenticated %}
+                        <form method="post" action="{% url 'book:comment' book.id %}">
+                            {% csrf_token %}
+                            {{ comment_form.body }}
+                            <button type="submit" class="btn btn-success">comment</button>
+                        </form>
+                    {% else %}
+                        <p><a href="{% url 'accounts:login' %}">login</a> for adding comment</p>
+                    {% endif %}
+                </div>
+                <div class="justify-content-center align-items-center mt-5 border-left border-right">
+                    {% if comments %}
+                        <p class="p-2">comments ({{ comments.count }})</p>
+                        {% for comment in comments %}
+                            <div class="d-flex justify-content-center py-2">
+                                <div class="second py-2 px-2"><span class="text1">{{ comment.body }}</span>
+                                    <div class="d-flex justify-content-between py-1 pt-2">
+                                        <div><img src="{{ comment.user.avatar.url }}" width="18"><span
+                                                class="text2">{{ comment.user.username }}</span></div>
+
+                                        <div>
+                                            {% if user.is_authenticated %}
+                                                <span class="text3"><a
+                                                        href="{% url 'book:comment_like' comment.id %}">like</a></span>
+                                            {% endif %}
+                                            <small>&nbsp {{ comment.total_like }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>this book has no comments yet</p>
+                    {% endif %}
+                </div>
             </div>
+
         </div>
+
     </div>
 {% endblock %}
