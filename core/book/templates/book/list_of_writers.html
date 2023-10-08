@@ -10,11 +10,17 @@
         <hr>
         <div class="d-flex">
             {% for writer in writers %}
-                <div class="p-4">
-                    <h5>{{ writer.name }}</h5>
-                    <img src="{{ writer.image.url }}" alt="book" style="width: 120px"><br>
-                    <a href="{{ writer.get_absolute_url }}">detail</a>
+
+                <div class="card" style="width:250px">
+                    <img class="card-img-top p-1" src="{{ writer.image.url }}" alt="Card image" style="width:100%">
+                    <div class="card-body">
+                        <h6 class="card-title">{{ writer.name }}</h6>
+
+                        <a href="{{ writer.get_absolute_url }}">More</a>
+                    </div>
                 </div>
+
+
             {% endfor %}
         </div>
 

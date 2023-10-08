@@ -18,11 +18,14 @@ class BookListView(ListView):
         qs = super().get_queryset()
         if self.kwargs.get('id'):
             return qs.filter(genre__id=self.kwargs.get('id'))
+        elif self.kwargs.get('slug'):
+            return qs.filter(writer__slug=self.kwargs.get('slug'))
         return qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context['genres'] = Genre.objects.all()
+        context['writers'] = Writer.objects.all()
         return context
 
 

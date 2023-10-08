@@ -13,14 +13,30 @@
                class="p-2 text-white rounded bg-secondary">{{ genre.name }}</a>
         {% endfor %}
         <hr>
+        <h4 class="my-3">Who is your favorite writer? </h4>
+        {% for writer in writers %}
+            <a href="{% url 'book:list_by_writer' writer.slug %}"
+               class="p-2 text-white rounded bg-secondary">{{ writer.name }}</a>
+        {% endfor %}
+
+        <hr>
         <div class="d-flex flex-wrap justify-content-center">
-            {% for book in books %}
-                <div class="p-4">
-                    <h5>{{ book.name }}</h5>
-                    <img src="{{ book.cover.url }}" alt="book" style="width: 120px"><br>
-                    <a href="{% url 'book:book_detail' book.id %}">detail</a>
+            {% if books %}
+                {% for book in books %}
+                    <div class="card" style="width:250px">
+                        <img class="card-img-top p-1" src="{{ book.cover.url }}" alt="Card image" style="width:100%">
+                        <div class="card-body">
+                            <h6 class="card-title">{{ book.name }}</h6>
+                            <p>by (<a href="{{ book.writer.get_absolute_url }}">{{ book.writer.name }}</a>)</p>
+                            <a href="{% url 'book:book_detail' book.id %}">See Detail</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div>
+                    <h3>There is no any books</h3>
                 </div>
-            {% endfor %}
+            {% endif %}
         </div>
 
     </div>
