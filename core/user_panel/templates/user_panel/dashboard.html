@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load render_partial %}
 {% block title %}
     Profile
+{% endblock %}
+
+{% block references %}
+    <link rel="stylesheet" href="{% static 'user_panel/css/dashboard.css' %}">
 {% endblock %}
 
 {% block content %}

@@ -1,16 +1,38 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     signup
 {% endblock %}
 
+{% block references %}
+    <link rel="stylesheet" href="{% static 'accounts/css/signup.css' %}">
+{% endblock %}
+
 {% block content %}
+
     <div class="container">
-        <form action="" method="post">
+        <form method="post" class="d-flex flex-column bg-light rounded p-4">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">register</button>
+            {{ form.username.label }}
+            {{ form.username }}
+            {{ form.username.errors }}
+            <hr>
+            {{ form.email.label }}
+            {{ form.email }}
+            {{ form.email.errors }}
+            <hr>
+            {{ form.password1.label }}
+            {{ form.password1 }}
+            {{ form.password1.errors }}
+            <hr>
+            {{ form.password2.label }}
+            {{ form.password2 }}
+            {{ form.password2.errors }}
+            <hr>
+            <button type="submit" class="btn btn-outline-primary">Sign UP</button>
+            <a href="{% url 'accounts:login' %}">have an account?</a>
         </form>
-        <a href="{% url 'accounts:login' %}">have an account?</a>
+
     </div>
 {% endblock %}

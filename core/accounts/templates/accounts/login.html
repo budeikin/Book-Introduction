@@ -1,17 +1,49 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     login
 {% endblock %}
 
+{% block references %}
+    <link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
+{% endblock %}
+
 {% block content %}
+
     <div class="container">
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">login</button>
-        </form>
-        <a href="{% url 'accounts:password_reset' %}">forgot password?</a>
+        <div class="screen">
+            <div class="screen__content">
+                <form method="post" class="login">
+                    {% csrf_token %}
+                    <div class="login__field">
+                        <i class="login__icon fas fa-user"></i>
+                        <input type="text" name="username" class="login__input" placeholder="User name / Email">
+                    </div>
+                    {{ form.username.errors }}
+                    <div class="login__field">
+                        <i class="login__icon fas fa-lock"></i>
+                        <input type="password" name="password" class="login__input" placeholder="Password">
+                    </div>
+                    {{ form.password.errors }}
+                    <button type="submit" class="button login__submit">
+                        login
+                    </button>
+
+                </form>
+                <a href="{% url 'accounts:password_reset' %}" class="bg-light rounded p-4 mb-0">forgot password
+                    ?</a>
+
+            </div>
+            <div class="screen__background">
+                <span class="screen__background__shape screen__background__shape4"></span>
+                <span class="screen__background__shape screen__background__shape3"></span>
+                <span class="screen__background__shape screen__background__shape2"></span>
+                <span class="screen__background__shape screen__background__shape1"></span>
+            </div>
+        </div>
     </div>
+
+
 
 {% endblock %}

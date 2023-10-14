@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
-    List Of Books
+    list of books
+{% endblock %}
+
+{% block references %}
+    <link rel="stylesheet" href="{% static 'book/css/list_of_books.css' %}">
 {% endblock %}
 
 {% block content %}

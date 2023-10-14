@@ -13,7 +13,6 @@ from .tokens import account_activation_token
 from django.views import View
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_text
-from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth import logout, login
 from django.utils.http import urlsafe_base64_decode
 
@@ -29,23 +28,33 @@ class SignUpView(View):
     def post(self, request, *args, **kwargs):
         signup_form = SignUpForm(request.POST)
         if signup_form.is_valid():
-            user = signup_form.save(commit=False)
-            user.is_active = False
-            user.save()
-            current_site = get_current_site(request)
+            user_email = signup_form.cleaned_data.get('email')
+            if User.objects.filter(email__iexact=user_email).exists():
+                signup_form.add_error('email', 'The email entered is duplicate')
+            else:
+                user = signup_form.save(commit=False)
+                user.is_active = False
+                user.save()
+                current_site = get_current_site(request)
 
-            send_mail('accounts/email/activation_account.tpl', context={
-                'user': user,
-                'domain': current_site,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user)
-            }, from_email='test@gmail.com', recipient_list=[user.email])
+                send_mail('accounts/email/activation_account.tpl', context={
+                    'user': user,
+                    'domain': current_site,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': account_activation_token.make_token(user)
+                }, from_email='test@gmail.com', recipient_list=[user.email])
+                return redirect('accounts:activate_done')
 
         return render(request, 'accounts/signup.html', context={'form': signup_form})
 
 
+# account activation done view
+class ActivationAccountDoneView(TemplateView):
+    template_name = 'accounts/account_activation_done.html'
+
+
 # account activation view
-class ActivateAccount(View):
+class ActivateAccountView(View):
     def get(self, request, uidb64, token, *args, **kwargs):
         try:
             uid = force_text(urlsafe_base64_decode(uidb64))
@@ -58,7 +67,6 @@ class ActivateAccount(View):
             user.save()
             return redirect('home:home_page')
         else:
-
             return redirect('home:home_page')
 
 
@@ -81,9 +89,9 @@ class LoginView(View):
                         login(request, user)
                         return redirect('home:home_page')
                     else:
-                        login_form.add_error('username', 'this user does not exist')
+                        login_form.add_error('password', 'username or your password is wrong')
                 else:
-                    login_form.add_error('username', 'this user does not exist')
+                    login_form.add_error('username', 'this user does not active')
             else:
                 login_form.add_error('username', 'this user does not exist')
             return render(request, 'accounts/login.html', context={'form': login_form})

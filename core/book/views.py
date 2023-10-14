@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -16,10 +17,15 @@ class BookListView(ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
+        query = self.request.GET.get("q")
         if self.kwargs.get('id'):
             return qs.filter(genre__id=self.kwargs.get('id'))
         elif self.kwargs.get('slug'):
             return qs.filter(writer__slug=self.kwargs.get('slug'))
+        elif query:
+            return qs.filter(
+                Q(writer__name__icontains=self.request.GET.get("q")) | Q(
+                    name__icontains=self.request.GET.get("q")))
         return qs
 
     def get_context_data(self, **kwargs):
@@ -37,6 +43,8 @@ class BookDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         comment_form = CommentForm()
+        current_book = self.object
+        context['related_books'] = Book.objects.filter(writer_id=current_book.writer.id).exclude(pk=current_book.id)
         context['comments'] = Comment.objects.filter(book_id=self.object.id)
         context['comment_form'] = comment_form
         return context

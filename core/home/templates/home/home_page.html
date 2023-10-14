@@ -3,35 +3,47 @@
 
 {% block title %}Home  {% endblock %}
 
-{% block content %}
-    <div class="container p-3 flex-wrap d-flex">
-        <div class="col-md-6">
-            <img src="{% static 'home/images/Screenshot(23).png' %}" class="rounded" alt="albert" style="width:500px">
-        </div>
+{% block references %}
+    <link rel="stylesheet" href="{% static 'home/css/home.css' %}">
+{% endblock %}
 
-        <div class="col-md-6">
-            <div class="d-flex flex-column justify-content-center mt-5">
-                <h3>Albert Camus</h3><br>
-                <h5>French philosopher and writer</h5><br>
-                <p>Albert Camus was a French philosopher, author, dramatist, journalist, and political activist. He was
-                    the recipient of the 1957 Nobel Prize in Literature at the age of 44, the second-youngest recipient
-                    in
-                    history. His works include The Stranger, The Plague, The Myth of Sisyphus, The Fall, and The
-                    Rebel.</p>
-                <a href="http://127.0.0.1:8000/book/writers/albert-camus/">more </a>
-                <hr>
-                <div class="d-flex">
-                    {% for book in books %}
-                        <div class="p-4">
-                            <h5>{{ book.name }}</h5>
-                            <img src="{{ book.cover.url }}" alt="book" style="width: 120px"><br>
-                            <a href="{{ book.get_absolute_url }}">detail</a>
-                        </div>
-                    {% endfor %}
+{% block content %}
+    <div class="container p-3 ">
+        <hr>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <h3>What book are you looking for?</h3>
+
+            <form action="{% url 'book:list' %}" method="get">
+                {% csrf_token %}
+                <div class="input-group mb-3">
+                    <input type="text" name="q" class="form-control"
+                           placeholder="Search books from name or writer name">
+                    <div class="input-group-append">
+                        <button class="btn btn-success" type="submit"><i class="bi bi-search"></i></button>
+                    </div>
                 </div>
 
+            </form>
+
+        </div>
+        <hr>
+        <div class="flex-wrap d-flex">
+            <div class="col-md-12">
+                <img src="{% static 'home/images/Greatest-Authors.jpg' %}" class="w-100" class="rounded" alt="albert">
+            </div>
+
+            <div class="col-md-12">
+                <div class="d-flex flex-column justify-content-center mt-5">
+                    <h3>Book Introduction</h3><br>
+                    <h5>We Are Here To Do This </h5><br>
+                    <p>Introducing the written works of the greatest writers in the history of the world, including
+                        Camus,
+                        Charles Dickens and...
+                        You can rate any works, publish your comments for any book, and you can see works similar to
+                        that
+                        book</p>
+                </div>
             </div>
         </div>
-
     </div>
 {% endblock %}

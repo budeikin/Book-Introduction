@@ -1,0 +1,25 @@
+body {
+    background: linear-gradient(90deg, #2f2f3a, #b1a2f3);
+}
+
+.input-group {
+    width: 500px;
+    border-radius: 50px;
+}
+
+.form-control {
+    width: 100%;
+}
+
+.nav-item, .nav-link {
+    color: white;
+}
+
+p {
+    font-weight: bold;
+    color: white;
+}
+
+h3, h5 {
+    color: white;
+}

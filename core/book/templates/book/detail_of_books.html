@@ -52,10 +52,11 @@
                     {% if comments %}
                         <p class="p-2">comments ({{ comments.count }})</p>
                         {% for comment in comments %}
-                            <div class="d-flex justify-content-center py-2">
+                            <div class="comment_box d-flex justify-content-center py-2">
                                 <div class="second py-2 px-2"><span class="text1">{{ comment.body }}</span>
-                                    <div class="d-flex justify-content-between py-1 pt-2">
-                                        <div><img src="{{ comment.user.avatar.url }}" width="18"><span
+                                    <div class=" d-flex justify-content-between py-1 pt-2">
+                                        <div><img src="{{ comment.user.avatar.url }}" class="rounded rounded-circle"
+                                                  width="25"><span
                                                 class="text2">{{ comment.user.username }}</span></div>
 
                                         <div>
@@ -76,6 +77,18 @@
             </div>
 
         </div>
+        <hr>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <h3>RELATED BOOKS </h3>
+            {% for book in related_books %}
+                <a href="{{ book.get_absolute_url }}">
+                    <img src="{{ book.cover.url }}" style="width: 200px" alt="">
 
+                </a>
+                <h3>{{ book.name }}</h3>
+                <p>by <a href="{{ book.writer.get_absolute_url }}">{{ book.writer }}</a></p>
+            {% endfor %}
+
+        </div>
     </div>
 {% endblock %}

@@ -37,7 +37,7 @@ body {
 }
 
 .second {
-    width: 350px;
+    width: 411px;
     background-color: white;
     border-radius: 4px;
     box-shadow: 10px 10px 5px #aaaaaa;
@@ -90,4 +90,8 @@ body {
 
 .thumbupo {
     color: #17a2b8;
+}
+
+.comment_box {
+    width: 420px;
 }
