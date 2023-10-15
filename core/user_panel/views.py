@@ -1,12 +1,13 @@
 from accounts.models import UserProfile
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView
-from .forms import PasswordChangeForm, EditProfileForm
+from .forms import PasswordChangeForm, EditProfileForm, EditProfilePictureForm
 from django.contrib.auth import settings
+from accounts.models import User
 
 
 # Create your views here.
@@ -50,4 +51,21 @@ class EditProfileView(View):
         edit_profile_form = EditProfileForm(request.POST, instance=current_user)
         if edit_profile_form.is_valid():
             edit_profile_form.save()
+            return redirect("user_panel:dashboard")
         return render(request, 'user_panel/edit_profile.html', context={'form': edit_profile_form})
+
+
+# edit profile picture view
+class EditProfilePictureView(View):
+    def get(self, request, **kwargs):
+        current_user = request.user
+        edit_profile_picture_form = EditProfilePictureForm(instance=current_user)
+        return render(request, 'user_panel/edit_profile_picture.html', context={'form': edit_profile_picture_form})
+
+    def post(self, request):
+        current_user = request.user
+        edit_profile_picture_form = EditProfilePictureForm(request.POST, request.FILES, instance=current_user)
+        if edit_profile_picture_form.is_valid():
+            edit_profile_picture_form.save()
+            return redirect("user_panel:dashboard")
+        return render(request, 'user_panel/edit_profile_picture.html', context={'form': edit_profile_picture_form})

@@ -17,7 +17,7 @@
                 {% csrf_token %}
                 <div class="input-group mb-3">
                     <input type="text" name="q" class="form-control"
-                           placeholder="Search books from name or writer name">
+                           placeholder="Search books from name or writer's name">
                     <div class="input-group-append">
                         <button class="btn btn-success" type="submit"><i class="bi bi-search"></i></button>
                     </div>
@@ -27,13 +27,10 @@
 
         </div>
         <hr>
+
         <div class="flex-wrap d-flex">
             <div class="col-md-12">
-                <img src="{% static 'home/images/Greatest-Authors.jpg' %}" class="w-100" class="rounded" alt="albert">
-            </div>
-
-            <div class="col-md-12">
-                <div class="d-flex flex-column justify-content-center mt-5">
+                <div class="d-flex flex-column justify-content-center align-items-center mt-5">
                     <h3>Book Introduction</h3><br>
                     <h5>We Are Here To Do This </h5><br>
                     <p>Introducing the written works of the greatest writers in the history of the world, including
@@ -44,6 +41,18 @@
                         book</p>
                 </div>
             </div>
+        </div>
+
+        <div class="col-md-12 p-2 d-flex justify-content-center align-items-center">
+            {% for book in latest_books %}
+                <div class="p-2 m-1">
+                    <img class="book_cover rounded" src="{{ book.cover.url }}" style="width: 200px; padding: 5px"
+                         alt="book-cover">
+                    <h4><a class="text-white" href="{{ book.get_absolute_url }}">{{ book.name }}</a></h4>
+                    <h5>by {{ book.writer.name }}</h5>
+                </div>
+            {% endfor %}
+
         </div>
     </div>
 {% endblock %}

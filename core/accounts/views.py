@@ -65,9 +65,9 @@ class ActivateAccountView(View):
         if user is not None and account_activation_token.check_token(user, token):
             user.is_active = True
             user.save()
-            return redirect('home:home_page')
+            return redirect('user_panel:dashboard')
         else:
-            return redirect('home:home_page')
+            return redirect('user_panel:dashboard')
 
 
 # login view

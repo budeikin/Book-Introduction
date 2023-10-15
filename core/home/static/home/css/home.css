@@ -4,8 +4,13 @@ body {
 
 .input-group {
     width: 500px;
-    border-radius: 50px;
+    border-radius: 200px;
 }
+
+.book_cover {
+    width: 200px;
+}
+
 
 .form-control {
     width: 100%;

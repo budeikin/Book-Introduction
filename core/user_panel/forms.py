@@ -38,4 +38,10 @@ class PasswordChangeForm(SetPasswordForm):
 class EditProfileForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name']
+        fields = ['username', 'first_name', 'last_name']
+
+
+class EditProfilePictureForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['avatar']

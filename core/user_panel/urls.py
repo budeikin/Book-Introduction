@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import DashboardView, ChangePasswordView, ChangePasswordDoneView,EditProfileView
+from .views import DashboardView, ChangePasswordView, ChangePasswordDoneView,EditProfileView,EditProfilePictureView
 
 app_name = 'user_panel'
 
@@ -8,5 +8,6 @@ urlpatterns = [
     path('change-password/', ChangePasswordView.as_view(), name='change_password'),
     path('change-password/done/', ChangePasswordDoneView.as_view(), name='change_password_done'),
     path('edit-profile/', EditProfileView.as_view(), name='edit_profile'),
+    path('edit-profile-picture/', EditProfilePictureView.as_view(), name='edit_profile_picture'),
 
 ]

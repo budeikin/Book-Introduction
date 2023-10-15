@@ -6,31 +6,38 @@
 {% endblock %}
 
 {% block references %}
-    <link rel="stylesheet" href="{% static 'user_panel/css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'user_panel/css/profile.css' %}">
 {% endblock %}
 
 {% block content %}
 
-    <div class="container d-flex">
+    <div class="container d-flex flex-wrap justify-content-center align-items-center">
+        {% render_partial 'user_panel.views.profile_menu_component' %}
 
-        <div class="col-sm-12 col-lg-9">
-            <div class="card" style="width:400px">
+        <div class="col-sm-12 col-md-9 d-flex bg-light p-3 mt-5 rounded">
+            <div class="p-3 col-md-6">
                 {% if user.avatar %}
-                    <img src="{{ profile.user.avatar.url }}" alt="avatar">
+                    <img src="{{ user.avatar.url }}" class="rounded rounded-circle" style="width: 200px" alt="">
                 {% else %}
-                    <img class="card-img-top"
-                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png"
-                         alt="Card image">
+                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" style="width: 200px" alt="">
+
                 {% endif %}
-                <div class="card-body">
-                    <h4 class="card-title">{{ profile.user.username }}</h4>
-                    <p class="card-text">{{ profile.user.email }}</p>
-                    <p class="card-text">{{ profile.user.first_name }}</p>
-                    <p class="card-text">{{ profile.user.last_name }}</p>
-                </div>
+                <br>
+                <a href="{% url 'user_panel:edit_profile_picture' %}" about="upload new profile picture"><i
+                        class="bi bi-upload"></i></a>
+            </div>
+            <div class="p-3">
+                <label for="#username" class="bg-light">Username : </label>
+                <h4 class="card-title ml-2" id="username">{{ profile.user.username }}</h4>
+                <label for="#email" class="bg-light">Email Address : </label>
+                <h4 class="card-title ml-2" id="email">{{ profile.user.email }}</h4>
+                <label for="#first_name" class="bg-light">First Name : </label>
+                <h4 class="card-title ml-2" id="first_name">{{ profile.user.first_name }}</h4>
+                <label for="#last_name" class="bg-light">Last Name : </label>
+                <h4 class="card-title ml-2" id="last_name">{{ profile.user.last_name }}</h4>
             </div>
         </div>
-        {% render_partial 'user_panel.views.profile_menu_component' %}
+
     </div>
 
 {% endblock %}

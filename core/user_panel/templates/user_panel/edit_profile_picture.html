@@ -4,7 +4,7 @@
 
 
 {% block title %}
-    edit profile
+    edit profile picture
 {% endblock %}
 
 {% block references %}
@@ -16,12 +16,17 @@
     <div class="container d-flex flex-wrap">
         {% render_partial 'user_panel.views.profile_menu_component' %}
         <div class="col-sm-9">
-            <h3>Edit Profile {{ user.username }}</h3>
             <hr>
-            <form method="post" class="p-3 ml-3">
+            {% if user.avatar %}
+                <img src="{{ user.avatar.url }}" class="rounded rounded-circle" style="width: 200px" alt="">
+            {% else %}
+                <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" style="width: 200px" alt="">
+
+            {% endif %}
+            <form method="post" class="p-3 ml-3" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" class="btn btn-primary">save changes</button>
+                <button type="submit" class="btn btn-primary">save</button>
             </form>
 
         </div>
