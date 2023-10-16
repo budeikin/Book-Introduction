@@ -1,4 +1,6 @@
 django==3.2
+djangorestframework==3.14.0
+drf-yasg==1.21.7
 psycopg2-binary==2.9.3
 pillow==10.0.0
 django-mail-templated==2.6.5

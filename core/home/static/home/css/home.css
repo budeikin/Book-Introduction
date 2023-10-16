@@ -7,6 +7,23 @@ body {
     border-radius: 200px;
 }
 
+.dev-box {
+    display: flex;
+    flex-flow: column;
+    flex-wrap: wrap;
+    background-color: whitesmoke;
+    padding: 20px;
+    border-radius: 30px;
+}
+
+.dev {
+    color: #2a2a38;
+}
+
+.dev-p {
+    color: #2f2f3a;
+}
+
 .book_cover {
     width: 200px;
 }

@@ -43,9 +43,11 @@ INSTALLED_APPS = [
     'book.apps.BookConfig',
 
     #  external moduels
+    'rest_framework',
+    'drf_yasg',
     'mail_templated',
     'django_render_partial',
-    'star_ratings'
+    'star_ratings',
 ]
 
 MIDDLEWARE = [
@@ -150,6 +152,5 @@ AUTH_USER_MODEL = 'accounts.User'
 
 # login url
 LOGIN_URL = 'accounts.views.LoginView'
-
 
 # STAR_RATINGS_RATING_MODEL = 'book.Book'

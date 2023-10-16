@@ -12,5 +12,6 @@ urlpatterns = [
     path("writers/<slug:slug>/", WritersDetailView.as_view(), name="writer_detail"),
     path('comment/<int:id>/', CommentCreateView.as_view(), name='comment'),
     path('comment_like/<int:id>/', CommentLike.as_view(), name='comment_like'),
-
+    # api urls
+    path('api/v1/', include('book.api.v1.urls'))
 ]
