@@ -13,3 +13,7 @@ class HomeView(TemplateView):
         context = super().get_context_data()
         context['latest_books'] = Book.objects.all().order_by('-id')[:4]
         return context
+
+
+class AboutUsView(TemplateView):
+    template_name = 'home/about_us_page.html'

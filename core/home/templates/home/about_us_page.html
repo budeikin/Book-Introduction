@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    About Us
+{% endblock %}
+
+{% block references %}
+    <link rel="stylesheet" href="{% static 'home/css/about_us.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="d-flex flex-column justify-content-center align-items-center p-6 bg-light rounded mt-2">
+            <h3 class="p-3">Meet Book Introduction</h3>
+            <h5 class="p-3">The creator of this site is <a href="https://budeikin.github.io/">Mohammad Hossein</a>
+                This site was created to introduce the famous books of the world and compare the opinions of users about
+                them also you can see a short bio of writers </h5>
+        </div>
+        <hr>
+        <div class="d-flex">
+            <div class="col-md-6 col-sm-12">
+                <img src="https://budeikin.github.io/static/images/2398_7cf1f4df-585d-4335-9a19-b2c3ca96c787_Mohammad%20Hossein_Ahmadvand.jpg"
+                     alt="" class="w-75 rounded">
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <h2>Mohammad Hossein Ahmadvand</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto, aut, cumque dicta earum eveniet
+                    hic id laborum optio perferendis quia rem, sint vel veniam. Asperiores consequuntur dolorum ea
+                    eaque, eius esse est impedit inventore ipsum nesciunt odio placeat praesentium quod, repellendus
+                    similique velit veritatis! Commodi debitis dignissimos ea eligendi ipsa maiores quibusdam
+                    repudiandae? Animi architecto asperiores assumenda cum debitis deserunt, dicta dignissimos dolore
+                    eaque enim exercitationem facere harum incidunt itaque laboriosam minima minus molestias natus neque
+                    nesciunt nostrum omnis placeat possimus praesentium quae qui quisquam quod recusandae reiciendis sed
+                    sequi suscipit tenetur totam ullam, unde veniam voluptatem! Adipisci, nostrum, obcaecati.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

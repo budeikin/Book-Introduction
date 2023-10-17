@@ -1,9 +1,9 @@
 {% extends "mail_templated/base.tpl" %}
 
 {% block subject %}
-Hello {{ user.username}}
+    Hello
 {% endblock %}
 
 {% block body %}
-http://{{ domain }}/auth/password-reset-confirm/{{uid}}/{{token}}/
+    http://{{ domain }}/auth/password-reset-confirm/{{ uid }}/{{ token }}/
 {% endblock %}

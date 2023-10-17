@@ -14,7 +14,6 @@ class SignUpForm(UserCreationForm):
         ]
 
 
-
 # Login Form
 class LoginForm(forms.Form):
     username = forms.CharField(label='username or email', max_length=50)
@@ -23,6 +22,7 @@ class LoginForm(forms.Form):
 
 # Password Reset Form (customized email sender)
 class CPasswordResetForm(PasswordResetForm):
+
     def send_mail(self, subject_template_name, email_template_name,
                   context, from_email, to_email, html_email_template_name=None):
         email_message = Emailmessage(email_template_name, context=context, from_email=from_email,
