@@ -18,7 +18,7 @@
                 them also you can see a short bio of writers </h5>
         </div>
         <hr>
-        <div class="d-flex">
+        <div class="d-flex bg-light">
             <div class="col-md-6 col-sm-12">
                 <img src="https://budeikin.github.io/static/images/2398_7cf1f4df-585d-4335-9a19-b2c3ca96c787_Mohammad%20Hossein_Ahmadvand.jpg"
                      alt="" class="w-75 rounded">
@@ -34,6 +34,16 @@
                     nesciunt nostrum omnis placeat possimus praesentium quae qui quisquam quod recusandae reiciendis sed
                     sequi suscipit tenetur totam ullam, unde veniam voluptatem! Adipisci, nostrum, obcaecati.</p>
             </div>
+        </div>
+        <hr>
+        <div class="d-flex flex-column justify-content-center align-items-center p-3 bg-light rounded">
+            <h4 class="bg-dark text-white rounded w-100 m-auto p-3">Contact Us</h4>
+            <hr class="w-25">
+            <form action="{% url 'home:contact_us_page' %}" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">submit</button>
+            </form>
         </div>
     </div>
 {% endblock %}
